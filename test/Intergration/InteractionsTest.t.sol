@@ -6,12 +6,12 @@ import {FundMe} from "../../src/FundMe.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 import {FundFundMe, WithdrawFundMe} from "../../script/Interactions.s.sol";
 
-contract FundMeTestIntegration is Test { 
+contract FundMeTestIntegration is Test {
     FundMe fundMe;
     uint256 constant SEND_VALUE = 0.1 ether;
     uint256 constant STARTING_BALANCE = 10 ether;
     address USER = makeAddr("user");
-    
+
     function setUp() external {
         DeployFundMe deploy = new DeployFundMe();
         fundMe = deploy.run();
@@ -20,14 +20,13 @@ contract FundMeTestIntegration is Test {
 
     function testUserCanFundInteractions() public {
         FundFundMe fundFundMe = new FundFundMe();
-        vm.deal(address(fundFundMe), 1 ether);   // give it ETH to send
+        vm.deal(address(fundFundMe), 1 ether); // give it ETH to send
 
         fundFundMe.fundFundMe(address(fundMe));
 
         WithdrawFundMe withdrawFundMe = new WithdrawFundMe();
         withdrawFundMe.withdrawFundMe(address(fundMe));
 
-         assertEq(address(fundMe).balance, 0);
-
+        assertEq(address(fundMe).balance, 0);
     }
 }

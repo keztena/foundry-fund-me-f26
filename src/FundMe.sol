@@ -2,7 +2,9 @@
 pragma solidity ^0.8.18;
 
 // Note: The AggregatorV3Interface might be at a different location than what was in the video!
-import { AggregatorV3Interface} from "lib/chainlink-brownie-contracts/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {
+    AggregatorV3Interface
+} from "lib/chainlink-brownie-contracts/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import {PriceConverter} from "./PriceConverter.sol";
 
 error NotOwner();
@@ -47,7 +49,7 @@ contract FundMe {
             s_addressToAmountFunded[funder] = 0;
         }
         s_funders = new address[](0);
-       (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
+        (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Call failed");
     }
 
